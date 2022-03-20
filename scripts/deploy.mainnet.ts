@@ -4,6 +4,7 @@ import { colorLog, Colors, addColor } from "./utils/ColorConsole"
 import * as readline from "readline-sync"
 
 const config: IDeployConfig = {
+	isTestnet: false,
 	outputFile: "./mainnet_deployments.json",
 	TX_CONFIRMATIONS: 3,
 	chainlinkSEQFlag: "0xa438451D6458044c3c8CD2f6f31c91ac882A6d91",
@@ -16,6 +17,15 @@ const config: IDeployConfig = {
 	gohmChainlink: {
 		priceOracle: "0x761aaeBf021F19F198D325D7979965D0c7C9e53b",
 		indexOracle: "0x48C4721354A3B29D80EF03C65E6644A37338a0B1",
+	},
+	dopex: "0x6C2C06790b3E3E3c38e12Ee22F8183b37a13EE55",
+	dopexOracle: {
+		contract: "0x252C07E0356d3B1a8cE273E39885b094053137b9",
+		decimals: 8,
+		currentPriceHex: "0xe1aa6036",
+		lastPriceHex: "0x053f14da",
+		lastUpdateHex: "0x",
+		decimalsHex: "0x",
 	},
 }
 

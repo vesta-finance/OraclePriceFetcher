@@ -1,7 +1,6 @@
 export interface IDeployConfig {
-	isTestnet?: boolean
+	isTestnet: boolean
 	outputFile: string
-	outputTxFile: string
 	TX_CONFIRMATIONS: number
 	chainlinkSEQFlag: string
 	chainlinkFlagsContract: string
@@ -12,9 +11,21 @@ export interface IDeployConfig {
 	ethChainlink: IChainlinkOracle
 	btcChainlink: IChainlinkOracle
 	gohmChainlink: IChainlinkOracle
+
+	dopex?: string
+	dopexOracle?: ICustomOracle
 }
 
 export interface IChainlinkOracle {
 	priceOracle: string
 	indexOracle: string
+}
+
+export interface ICustomOracle {
+	contract: string
+	decimals: number
+	currentPriceHex: string
+	lastPriceHex: string
+	lastUpdateHex: string
+	decimalsHex: string
 }

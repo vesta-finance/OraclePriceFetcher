@@ -1,6 +1,6 @@
 import { IDeployConfig } from "./config/DeployConfig"
 import { DeploymentHelper } from "./utils/DeploymentHelper"
-import { ethers } from "hardhat"
+import { ethers, upgrades } from "hardhat"
 import { Contract, Signer } from "ethers"
 import { any } from "hardhat/internal/core/params/argumentTypes"
 
@@ -51,8 +51,8 @@ export class Deployer {
 			this.config.chainlinkFlagsContract
 		)
 
-		await this.configOracles()
-		await this.configPriceFeedV2()
+		// await this.configOracles()
+		// await this.configPriceFeedV2()
 		await this.transferOwnership()
 	}
 
@@ -89,6 +89,21 @@ export class Deployer {
 		await this.helper.sendAndWaitForTransaction(
 			this.chainlinkOracle?.addOracle(this.config.rentBTC, this.config.btcChainlink.priceOracle, ZERO_ADDRESS)
 		)
+
+		if (this.config.dopex !== undefined) {
+			console.log("Dopex")
+			await this.helper.sendAndWaitForTransaction(
+				this.customOracle?.addOracle(
+					this.config.dopex,
+					this.config.dopexOracle?.contract,
+					this.config.dopexOracle?.decimals,
+					this.config.dopexOracle?.currentPriceHex,
+					this.config.dopexOracle?.lastPriceHex,
+					this.config.dopexOracle?.lastUpdateHex,
+					this.config.dopexOracle?.decimalsHex
+				)
+			)
+		}
 	}
 
 	async configPriceFeedV2() {
@@ -98,7 +113,7 @@ export class Deployer {
 			this.priceFeedV2?.addOracle(ZERO_ADDRESS, this.chainlinkOracle?.address, ZERO_ADDRESS)
 		)
 		await this.helper.sendAndWaitForTransaction(
-			this.priceFeedV2?.addOracle(this.config.gohm, this.customOracle?.address, ZERO_ADDRESS)
+			this.priceFeedV2?.addOracle(this.config.gohm, this.chainlinkOracle?.address, ZERO_ADDRESS)
 		)
 		await this.helper.sendAndWaitForTransaction(
 			this.priceFeedV2?.addOracle(this.config.rentBTC, this.chainlinkOracle?.address, ZERO_ADDRESS)
@@ -119,5 +134,7 @@ export class Deployer {
 				this.chainlinkOracle?.transferOwnership(this.config.adminAddress)
 			)
 		}
+
+		upgrades.admin.transferProxyAdminOwnership(this.config.adminAddress)
 	}
 }
