@@ -15,3 +15,10 @@ Each wrapper are an extentions of BaseWrapper. This is where the magic happens, 
 
 #### OracleVerificatorV1
 Our security contract. It will verify the response of the primary and secondary oracles. Then define the "valid" price based on our check.
+
+## Requirements
+To be eligible to our system, your oracle should have the following functions / datas [VIEW ONLY]
+1. [Requried] Current Price
+2. [Required] Last Price
+3. [Optional but highly recommended] Last Update Time: When was the last update on the oracle.
+4. [Optional] Decimals: What decimals are you using for the oracle.
