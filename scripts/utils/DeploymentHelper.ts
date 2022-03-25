@@ -64,21 +64,22 @@ export class DeploymentHelper {
 		return contract
 	}
 
-	async deployContractByName(contractFileName: string, name?: string) {
+	async deployContractByName(contractFileName: string, name?: string, ...args: Array<any>) {
 		return await this.deployContract(
 			await ethers.getContractFactory(contractFileName),
-			name !== undefined ? name : contractFileName
+			name !== undefined ? name : contractFileName,
+			...args
 		)
 	}
 
-	async deployContract(contractFactory: ContractFactory, contractName: string) {
+	async deployContract(contractFactory: ContractFactory, contractName: string, ...args: Array<any>) {
 		const [findOld, address] = this.tryToGetSaveContractAddress(contractName)
 
 		if (findOld) {
 			return contractFactory.attach(address)
 		}
 
-		const contractDeployer = await contractFactory.deploy()
+		const contractDeployer = await contractFactory.deploy(...args)
 		const contract = await contractDeployer.deployed()
 
 		this.deploymentState[contractName] = {

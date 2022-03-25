@@ -13,6 +13,7 @@ interface IOracleWrapper {
 
 	function fetchPrice(address _token) external;
 
+	//Sad typo
 	function retriveSavedResponses(address _token) external returns (SavedResponse memory currentResponse);
 
 	function getLastPrice(address _token) external view returns (uint256);

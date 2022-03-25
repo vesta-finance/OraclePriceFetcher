@@ -14,6 +14,9 @@ export interface IDeployConfig {
 
 	dopex?: string
 	dopexOracle?: ICustomOracle
+
+	twap?: ITwapConfigConstructor
+	gmx?: ITwapOracle
 }
 
 export interface IChainlinkOracle {
@@ -28,4 +31,16 @@ export interface ICustomOracle {
 	lastPriceHex: string
 	lastUpdateHex: string
 	decimalsHex: string
+}
+
+export interface ITwapConfigConstructor {
+	weth: string
+	chainlinkEth: string
+	chainlingFlagSEQ: string
+	chainlinkFlagsContract: string
+}
+
+export interface ITwapOracle {
+	token: string
+	pool: string
 }

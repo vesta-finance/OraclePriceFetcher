@@ -1,9 +1,9 @@
-pragma solidity ^0.8.11;
+pragma solidity >=0.4.23;
 
 import "./VM.sol";
 
 contract Accounts {
-	constructor(VM vm) {
+	constructor(VM vm) public {
 		for (uint256 i = 0; i < PRIVATE_KEYS.length; i++) {
 			address wallet = vm.addr(PRIVATE_KEYS[i]);
 			PUBLIC_KEYS.push(wallet);

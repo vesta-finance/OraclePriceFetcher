@@ -1,6 +1,6 @@
 import { BaseTest, console } from "../base/BaseTest.sol";
 
-import "../../main/Wrapped/CustomOracleWrapper.sol";
+import "../../main/wrapped/CustomOracleWrapper.sol";
 
 contract CustomOracleWrapperTest is BaseTest {
 	bytes private constant REVERT_INVALID_ADDRESS = "Invalid Address";

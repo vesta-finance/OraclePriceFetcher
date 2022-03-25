@@ -27,6 +27,18 @@ const config: IDeployConfig = {
 		lastUpdateHex: "0x",
 		decimalsHex: "0x",
 	},
+
+	twap: {
+		weth: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+		chainlinkEth: "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612",
+		chainlingFlagSEQ: "0xa438451D6458044c3c8CD2f6f31c91ac882A6d91",
+		chainlinkFlagsContract: "0x3C14e07Edd0dC67442FA96f1Ec6999c57E810a83",
+	},
+
+	gmx: {
+		token: "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
+		pool: "0x80A9ae39310abf666A87C743d6ebBD0E8C42158E",
+	},
 }
 
 async function main() {

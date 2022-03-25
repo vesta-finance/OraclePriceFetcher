@@ -2,7 +2,6 @@ import { IDeployConfig } from "./config/DeployConfig"
 import { DeploymentHelper } from "./utils/DeploymentHelper"
 import { ethers, upgrades } from "hardhat"
 import { Contract, Signer } from "ethers"
-import { any } from "hardhat/internal/core/params/argumentTypes"
 
 export const ZERO_ADDRESS: string = "0x" + "0".repeat(40)
 
@@ -15,6 +14,7 @@ export class Deployer {
 	priceFeedV2?: Contract
 	customOracle?: Contract
 	chainlinkOracle?: Contract
+	twapOracle?: Contract
 
 	constructor(config: IDeployConfig) {
 		this.config = config
@@ -51,9 +51,24 @@ export class Deployer {
 			this.config.chainlinkFlagsContract
 		)
 
+		this.twapOracle = await this.helper.deployContractByName(
+			"TwapOracleWrapper",
+			"TwapOracleWrapper",
+			this.config.twap?.weth,
+			this.config.twap?.chainlinkEth,
+			this.config.twap?.chainlingFlagSEQ,
+			this.config.twap?.chainlinkFlagsContract
+		)
+
+		// await this.helper.sendAndWaitForTransaction(
+		// 	await this.twapOracle.addOracle(this.config.gmx?.token, this.config.gmx?.pool)
+		// )
+
+		console.log((await this.twapOracle.getCurrentPrice(this.config.gmx?.token)).toString())
+
 		// await this.configOracles()
 		// await this.configPriceFeedV2()
-		await this.transferOwnership()
+		// await this.transferOwnership()
 	}
 
 	async configOracles() {
