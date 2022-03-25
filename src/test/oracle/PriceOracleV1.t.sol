@@ -48,7 +48,7 @@ contract PriceOracleV1Test is BaseTest {
 		underTest.registerTrustedNode(trustedNode);
 	}
 
-	function test_registerTrustedNode_GivenInvalidNode_thenReverts() public {
+	function test_registerTrustedNode_GivenInvalidNode_thenReverts() public prankAs(owner) {
 		// Invalid node can not be registered
 		vm.expectRevert(REVERT_INVALID_NODE);
 		underTest.registerTrustedNode(address(0));
@@ -62,7 +62,7 @@ contract PriceOracleV1Test is BaseTest {
 		underTest.registerTrustedNode(trustedNode);
 	}
 
-	function test_update_GivenNotTrustedNode_thenReverts() public {
+	function test_update_GivenNotTrustedNode_thenReverts() public prankAs(owner) {
 		underTest.unregisterTrustedNode(trustedNode);
 
 		// Already unregisterd, so not trusted now
@@ -75,10 +75,10 @@ contract PriceOracleV1Test is BaseTest {
 		vm.stopPrank();
 	}
 
-	function test_update_GivenTrustedNode_thenUpdatesCorrectly() public {
+	function test_update_GivenTrustedNode_thenUpdatesCorrectly() public prankAs(owner) {
 		underTest.registerTrustedNode(trustedNode);
 
-		(uint256 _currentPrice, uint256 _lastPrice, uint256 _round, uint256 _lastUpdate) = underTest.getPriceData();
+		(uint256 _currentPrice, , uint256 _round, uint256 _lastUpdate) = underTest.getPriceData();
 
 		// Trusted Node is able to update price
 		vm.prank(trustedNode);
