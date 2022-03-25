@@ -7,7 +7,6 @@ import "../../main/oracle/PriceOracleV1.sol";
 
 contract PriceOracleV1Test is BaseTest {
 	bytes private constant REVERT_INVALID_NODE = "VestaPriceOracleV1: invalid node address";
-	bytes private constant REVERT_NOT_OWNER = "Ownable: caller is not the owner";
 	bytes private constant REVERT_NOT_TRUSTED_NODE = "VestaPriceOracleV1: address is not trusted";
 
 	PriceOracleV1 private underTest;
