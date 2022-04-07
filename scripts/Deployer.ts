@@ -60,15 +60,9 @@ export class Deployer {
 			this.config.twap?.chainlinkFlagsContract
 		)
 
-		// await this.helper.sendAndWaitForTransaction(
-		// 	await this.twapOracle.addOracle(this.config.gmx?.token, this.config.gmx?.pool)
-		// )
-
-		console.log((await this.twapOracle.getCurrentPrice(this.config.gmx?.token)).toString())
-
-		// await this.configOracles()
-		// await this.configPriceFeedV2()
-		// await this.transferOwnership()
+		await this.configOracles()
+		await this.configPriceFeedV2()
+		await this.transferOwnership()
 	}
 
 	async configOracles() {
@@ -117,6 +111,12 @@ export class Deployer {
 					this.config.dopexOracle?.lastUpdateHex,
 					this.config.dopexOracle?.decimalsHex
 				)
+			)
+		}
+
+		if (this.config.gmx !== undefined) {
+			await this.helper.sendAndWaitForTransaction(
+				await this.twapOracle?.addOracle(this.config.gmx?.token, this.config.gmx?.pool)
 			)
 		}
 	}
