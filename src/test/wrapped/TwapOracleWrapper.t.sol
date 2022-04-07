@@ -2,7 +2,7 @@
 pragma solidity ^0.6.12;
 pragma experimental ABIEncoderV2;
 
-import { BaseTest, console } from "../base/BaseTest.sol";
+import { BaseTest, console } from "../base/BaseTest.t.sol";
 
 import "../../main/wrapped/TwapOracleWrapper.sol";
 

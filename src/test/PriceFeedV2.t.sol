@@ -1,4 +1,4 @@
-import { BaseTest, console } from "./base/BaseTest.sol";
+import { BaseTest, console } from "./base/BaseTest.t.sol";
 
 import "../main/PriceFeedV2.sol";
 import "../main/interfaces/IOracleVerificationV1.sol";

@@ -1,4 +1,4 @@
-import { BaseTest, console } from "./base/BaseTest.sol";
+import { BaseTest, console } from "./base/BaseTest.t.sol";
 
 import "../main/OracleVerificationV1.sol";
 import { IOracleVerificationV1 as OracleStruct } from "../main/interfaces/IOracleVerificationV1.sol";

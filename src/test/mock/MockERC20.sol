@@ -3,8 +3,8 @@
 pragma solidity ^0.8.13;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 
-contract ERC20Mock is ERC20Upgradeable {
-	uint8 private DECIMALS = 18;
+contract MockERC20 is ERC20Upgradeable {
+	uint8 private DECIMALS;
 
 	function setUp(
 		string memory _name,
@@ -40,6 +40,7 @@ contract ERC20Mock is ERC20Upgradeable {
 	}
 
 	function decimals() public view override returns (uint8) {
+		if (DECIMALS == 0) return 18;
 		return DECIMALS;
 	}
 }
