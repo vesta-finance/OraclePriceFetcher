@@ -69,6 +69,7 @@ contract PriceFeedV2 is IPriceFeedV2, OwnableUpgradeable {
 		uint256 goodPrice = _getValidPrice(_token, oracle.primaryWrapper, oracle.secondaryWrapper);
 		lastGoodPrice[_token] = goodPrice;
 
+		emit TokenPriceUpdated(_token, goodPrice);
 		return goodPrice;
 	}
 

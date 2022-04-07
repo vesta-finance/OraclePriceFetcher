@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv"
 
-import { HardhatUserConfig, task } from "hardhat/config"
+import { HardhatUserConfig, task, subtask } from "hardhat/config"
+import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from "hardhat/builtin-tasks/task-names"
+
 import "@nomiclabs/hardhat-etherscan"
 import "@nomiclabs/hardhat-waffle"
 import "@typechain/hardhat"
@@ -16,6 +18,11 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 	for (const account of accounts) {
 		console.log(account.address)
 	}
+})
+
+subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(async (_, __, runSuper) => {
+	const paths = await runSuper()
+	return paths.filter((p: string) => !p.endsWith(".t.sol") || p.includes("/mock/"))
 })
 
 const config: HardhatUserConfig = {
@@ -57,7 +64,7 @@ const config: HardhatUserConfig = {
 		],
 	},
 	paths: {
-		sources: "./src/main",
+		sources: "./src",
 		tests: "./test",
 		cache: "./hardhat/cache",
 		artifacts: "./hardhat/artifacts",
