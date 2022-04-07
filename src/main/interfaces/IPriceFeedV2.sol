@@ -6,6 +6,7 @@ interface IPriceFeedV2 {
 	event OracleRemoved(address indexed _token);
 	event AccessChanged(address indexed _token, bool _hasAccess);
 	event OracleVerificationChanged(address indexed _newVerificator);
+	event TokenPriceUpdated(address indexed _token, uint256 _price);
 
 	struct Oracle {
 		address primaryWrapper;
