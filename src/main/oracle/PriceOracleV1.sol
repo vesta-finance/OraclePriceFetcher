@@ -85,10 +85,10 @@ contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
 		external
 		view
 		returns (
-			uint256,
-			uint256,
-			uint256,
-			uint256
+			uint256 _currentPrice,
+			uint256 _lastPrice,
+			uint256 _round,
+			uint256 _lastUpdate
 		)
 	{
 		return (currentPrice, lastPrice, round, lastUpdate);

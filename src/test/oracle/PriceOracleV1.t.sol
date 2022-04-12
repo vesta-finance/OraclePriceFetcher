@@ -38,51 +38,37 @@ contract PriceOracleV1Test is BaseTest {
 		underTest = new PriceOracleV1();
 
 		underTest.setUp(10, 11, 1);
-		// Owner is set correctly
 		assertEq(underTest.owner(), user);
 	}
 
-	function test_registerTrustedNode_GivenNotOwner_thenReverts() public prankAs(user) {
-		// Only owner is able to register a valid node
+	function test_registerTrustedNode_asNotOwner_givenAnyNode_thenReverts() public prankAs(user) {
 		vm.expectRevert(REVERT_NOT_OWNER);
 		underTest.registerTrustedNode(trustedNode);
 	}
 
-	function test_registerTrustedNode_GivenInvalidNode_thenReverts() public prankAs(owner) {
-		// Invalid node can not be registered
+	function test_registerTrustedNode_asOwner_givenInvalidAddress_thenReverts() public prankAs(owner) {
 		vm.expectRevert(REVERT_INVALID_NODE);
 		underTest.registerTrustedNode(address(0));
-	}
-
-	function test_setUp_GivenValidNode_thenRegisterTrustedNodeAndCallerIsOwner() public prankAs(user) {
-		underTest = new PriceOracleV1();
-
-		underTest.setUp(10, 11, 1);
-		// Owner is able to register a valid node
-		underTest.registerTrustedNode(trustedNode);
 	}
 
 	function test_update_GivenNotTrustedNode_thenReverts() public {
 		vm.prank(owner);
 		underTest.unregisterTrustedNode(trustedNode);
 
-		// Already unregisterd, so not trusted now
 		vm.startPrank(trustedNode);
 		{
-			// Update attempt from untrusted node, then reverts
 			vm.expectRevert(REVERT_NOT_TRUSTED_NODE);
 			underTest.update(12);
 		}
 		vm.stopPrank();
 	}
 
-	function test_update_GivenTrustedNode_thenUpdatesCorrectly() public {
+	function test_update_asTrustedNode_givenNewPrice_thenGetPriceCorrectly() public {
 		vm.prank(owner);
 		underTest.registerTrustedNode(trustedNode);
 
 		(uint256 _currentPrice, , uint256 _round, uint256 _lastUpdate) = underTest.getPriceData();
 
-		// Trusted Node is able to update price
 		vm.prank(trustedNode);
 		underTest.update(12);
 
