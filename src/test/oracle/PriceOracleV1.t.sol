@@ -25,10 +25,7 @@ contract PriceOracleV1Test is BaseTest {
 
 		vm.startPrank(owner);
 		{
-			// Set decimals of 1 for test purposes
 			underTest.setUp(10, 11, 1);
-
-			// Register a node
 			underTest.registerTrustedNode(trustedNode);
 		}
 		vm.stopPrank();
@@ -67,16 +64,15 @@ contract PriceOracleV1Test is BaseTest {
 		vm.prank(owner);
 		underTest.registerTrustedNode(trustedNode);
 
-		(uint256 _currentPrice, , uint256 _round, uint256 _lastUpdate) = underTest.getPriceData();
+		(uint256 _currentPrice, , uint256 _lastUpdate) = underTest.getPriceData();
 
 		vm.prank(trustedNode);
 		underTest.update(12);
 
-		(uint256 currentPrice, uint256 lastPrice, uint256 round, uint256 lastUpdate) = underTest.getPriceData();
+		(uint256 currentPrice, uint256 lastPrice, uint256 lastUpdate) = underTest.getPriceData();
 
 		assertEq(currentPrice, 12);
 		assertEq(_currentPrice, lastPrice);
-		assertEq(_round + 1, round);
 		assertTrue(_lastUpdate <= lastUpdate);
 	}
 }
