@@ -20,8 +20,16 @@ contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
 
 	uint8 public decimals;
 
+	error AddressNotTrusted();
+	error ZeroAddress();
+
 	modifier hasTrusted() {
-		require(trusted[msg.sender], "VestaPriceOracleV1: address is not trusted");
+		if (!trusted[msg.sender]) revert AddressNotTrusted();
+		_;
+	}
+
+	modifier checkNonZeroAddress(address _addr) {
+		if (_addr == address(0)) revert ZeroAddress();
 		_;
 	}
 
@@ -49,18 +57,14 @@ contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
 	 * @dev register address as a trusted Node
 	 * Trusted node has permission to update price data
 	 */
-	function registerTrustedNode(address _node) external onlyOwner {
-		require(_node != address(0), "VestaPriceOracleV1: invalid node address");
-
+	function registerTrustedNode(address _node) external checkNonZeroAddress(_node) onlyOwner {
 		trusted[_node] = true;
 	}
 
 	/**
 	 * @dev remove address from tursted list
 	 */
-	function unregisterTrustedNode(address _node) external onlyOwner {
-		require(_node != address(0), "VestaPriceOracleV1: invalid node address");
-
+	function unregisterTrustedNode(address _node) external checkNonZeroAddress(_node) onlyOwner {
 		trusted[_node] = false;
 	}
 
@@ -69,8 +73,6 @@ contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
 	 * This function is supposed to be called by trusted node only
 	 */
 	function update(uint256 newPrice) external hasTrusted {
-		require(newPrice != 0, "VestaPriceOracleV1: invalid price");
-
 		lastPrice = currentPrice;
 		currentPrice = newPrice;
 

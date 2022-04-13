@@ -6,8 +6,8 @@ import { BaseTest, console } from "../base/BaseTest.sol";
 import "../../main/oracle/PriceOracleV1.sol";
 
 contract PriceOracleV1Test is BaseTest {
-	bytes private constant REVERT_INVALID_NODE = "VestaPriceOracleV1: invalid node address";
-	bytes private constant REVERT_NOT_TRUSTED_NODE = "VestaPriceOracleV1: address is not trusted";
+	string private constant REVERT_INVALID_NODE = "ZeroAddress()";
+	string private constant REVERT_NOT_TRUSTED_NODE = "AddressNotTrusted()";
 
 	PriceOracleV1 private underTest;
 
@@ -41,23 +41,25 @@ contract PriceOracleV1Test is BaseTest {
 		assertEq(underTest.owner(), user);
 	}
 
-	function test_registerTrustedNode_asNotOwner_givenAnyNode_thenReverts() public prankAs(user) {
-		vm.expectRevert(REVERT_NOT_OWNER);
-		underTest.registerTrustedNode(trustedNode);
+	function test_registerTrustedNode_asNotOwner_thenReverts(address anyAddr) public prankAs(anyAddr) {
+		if (anyAddr != owner) {
+			vm.expectRevert(REVERT_NOT_OWNER);
+			underTest.registerTrustedNode(trustedNode);
+		}
 	}
 
 	function test_registerTrustedNode_asOwner_givenInvalidAddress_thenReverts() public prankAs(owner) {
-		vm.expectRevert(REVERT_INVALID_NODE);
+		vm.expectRevert(abi.encodeWithSignature(REVERT_INVALID_NODE));
 		underTest.registerTrustedNode(address(0));
 	}
 
-	function test_update_GivenNotTrustedNode_thenReverts() public {
+	function test_update_givenNotTrustedNode_thenReverts() public {
 		vm.prank(owner);
 		underTest.unregisterTrustedNode(trustedNode);
 
 		vm.startPrank(trustedNode);
 		{
-			vm.expectRevert(REVERT_NOT_TRUSTED_NODE);
+			vm.expectRevert(abi.encodeWithSignature(REVERT_NOT_TRUSTED_NODE));
 			underTest.update(12);
 		}
 		vm.stopPrank();
