@@ -19,6 +19,8 @@ interface IOracleWrapper {
 	function getLastPrice(address _token) external view returns (uint256);
 
 	function getCurrentPrice(address _token) external view returns (uint256);
+
+	function getExternalPrice(address _token) external view returns (uint256);
 }
 
 /*
@@ -132,6 +134,17 @@ contract TwapOracleWrapper is IOracleWrapper {
 
 	function getCurrentPrice(address _token) external view override returns (uint256) {
 		return savedResponses[_token].currentPrice;
+	}
+
+	function getExternalPrice(address _token) external view override returns (uint256) {
+		uint256 priceInETH = getTokenPriceInETH(_token, twapPeriodInSeconds);
+
+		(, int256 price, , , ) = ethChainlinkAggregator.latestRoundData();
+		uint8 decimals = ethChainlinkAggregator.decimals();
+
+		uint256 ethPriceInUSD = scalePriceByDigits(uint256(price), decimals);
+
+		return (priceInETH * ethPriceInUSD) / 1e18;
 	}
 
 	function getTokenPriceInETH(address _token, uint32 _twapPeriod) public view returns (uint256) {
