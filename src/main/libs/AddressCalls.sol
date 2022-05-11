@@ -3,6 +3,8 @@ pragma solidity ^0.8.13;
 
 library AddressCalls {
 	function callReturnsUint8(address _contract, bytes memory _callData) internal view returns (uint8, bool) {
+		if (keccak256(_callData) == keccak256("")) return (0, false);
+
 		(bool success, bytes memory response) = call(_contract, _callData);
 
 		if (success) {
@@ -13,6 +15,8 @@ library AddressCalls {
 	}
 
 	function callReturnsUint256(address _contract, bytes memory _callData) internal view returns (uint256, bool) {
+		if (keccak256(_callData) == keccak256("")) return (0, false);
+
 		(bool success, bytes memory response) = call(_contract, _callData);
 
 		if (success) {
@@ -23,6 +27,8 @@ library AddressCalls {
 	}
 
 	function callReturnsBytes32(address _contract, bytes memory _callData) internal view returns (bytes32, bool) {
+		if (keccak256(_callData) == keccak256("")) return ("", false);
+
 		(bool success, bytes memory response) = call(_contract, _callData);
 
 		if (success) {
@@ -37,6 +43,8 @@ library AddressCalls {
 		view
 		returns (bool success, bytes memory response)
 	{
+		if (keccak256(_callData) == keccak256("")) return (false, response);
+
 		if (_contract == address(0)) {
 			return (false, response);
 		}

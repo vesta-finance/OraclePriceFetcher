@@ -102,6 +102,11 @@ contract CustomOracleWrapper is BaseWrapper, OwnableUpgradeable {
 		return savedResponses[_token].currentPrice;
 	}
 
+	function getExternalPrice(address _token) external view override returns (uint256) {
+		OracleResponse memory oracleResponse = _getResponses(_token);
+		return oracleResponse.currentPrice;
+	}
+
 	function _getResponses(address _token) internal view returns (OracleResponse memory response) {
 		CustomOracle memory oracle = oracles[_token];
 		if (oracle.contractAddress == address(0)) {

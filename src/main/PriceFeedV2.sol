@@ -73,6 +73,12 @@ contract PriceFeedV2 is IPriceFeedV2, OwnableUpgradeable {
 		return goodPrice;
 	}
 
+	function getExternalPrice(address _token) external view override returns (uint256) {
+		Oracle memory oracle = oracles[_token];
+		require(oracle.primaryWrapper != address(0), "Oracle not found");
+		return IOracleWrapper(oracle.primaryWrapper).getExternalPrice(_token);
+	}
+
 	function _getValidPrice(
 		address _token,
 		address primary,

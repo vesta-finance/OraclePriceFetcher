@@ -147,6 +147,13 @@ contract ChainlinkWrapper is BaseWrapper, OwnableUpgradeable {
 		return _sanitizePrice(responses.price, responses.index);
 	}
 
+	function getExternalPrice(address _token) external view override returns (uint256) {
+		(OracleResponse memory currentResponse, ) = _getResponses(_token, false);
+		(OracleResponse memory currentResponseIndex, ) = _getResponses(_token, true);
+
+		return _sanitizePrice(currentResponse.answer, currentResponseIndex.answer);
+	}
+
 	function _sanitizePrice(uint256 price, uint256 index) internal pure returns (uint256) {
 		return price.mul(index).div(1e18);
 	}
