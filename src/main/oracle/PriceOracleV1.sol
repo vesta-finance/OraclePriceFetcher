@@ -5,18 +5,16 @@ import "../interfaces/IPriceOracleV1.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
+	string public ORACLE_NAME;
+
 	uint256 public currentPrice;
 	uint256 public lastPrice;
 	uint256 public lastUpdate;
-
-	mapping(address => bool) trusted;
-
 	uint8 public decimals;
 
-	error AddressNotTrusted();
-	error ZeroAddress();
+	mapping(address => bool) private trusted;
 
-	modifier hasTrusted() {
+	modifier isTrusted() {
 		if (!trusted[msg.sender]) revert AddressNotTrusted();
 		_;
 	}
@@ -26,18 +24,11 @@ contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
 		_;
 	}
 
-	function setUp(
-		uint256 current,
-		uint256 last,
-		uint8 dec
-	) external initializer {
-		decimals = dec;
-
-		currentPrice = current;
-		lastPrice = last;
-		lastUpdate = block.timestamp;
-
+	function setUp(string memory _oracleName, uint8 _decimals) external initializer {
 		__Ownable_init();
+
+		ORACLE_NAME = _oracleName;
+		decimals = _decimals;
 	}
 
 	function setDecimals(uint8 _decimals) external onlyOwner {
@@ -52,7 +43,11 @@ contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
 		trusted[_node] = false;
 	}
 
-	function update(uint256 newPrice) external hasTrusted {
+	function IsTrustedNode(address _node) external view returns (bool) {
+		return trusted[_node];
+	}
+
+	function update(uint256 newPrice) external isTrusted {
 		lastPrice = currentPrice;
 		currentPrice = newPrice;
 		lastUpdate = block.timestamp;

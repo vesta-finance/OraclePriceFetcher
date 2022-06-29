@@ -7,6 +7,9 @@ pragma solidity ^0.8.13;
  * For special uses of supporting built-in protocols only
  */
 interface IPriceOracleV1 {
+	error AddressNotTrusted();
+	error ZeroAddress();
+
 	function setDecimals(uint8 _decimals) external;
 
 	/**
