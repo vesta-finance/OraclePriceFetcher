@@ -1,21 +1,24 @@
 {
 	"gohmOracle": {
-		"address": "0xB7Cd4c0D10C38dF1b6AD57AC4328B810e20e0C89"
+		"address": "0xC8840E5C6A0b6bA8c79Cab53B15b79286CA22A63"
 	},
 	"OracleVerificationV1": {
-		"address": "0xfd0952105D39a4071264b600BCf6c1D0df4358D7",
+		"address": "0x23210063d06acE58D32b61E0881c04FFd7f6244A",
 		"proxyAdmin": "0x173674c6d9630b7c3949e4988d9E079a0bE7cF81"
 	},
 	"PriceFeedV2": {
-		"address": "0x0C18d96746E2d0f04EadF62e919562CB9E6Ffc43",
+		"address": "0x6739A4F471c630f39cbB55A1d470D414b99074cD",
 		"proxyAdmin": "0x173674c6d9630b7c3949e4988d9E079a0bE7cF81"
 	},
 	"CustomOracleWrapper": {
-		"address": "0x360f4a3458e607EFD0771A3775cDE57CBD5043E1",
+		"address": "0x61995C2ff2949E79405d2398b70152A7655240A2",
 		"proxyAdmin": "0x173674c6d9630b7c3949e4988d9E079a0bE7cF81"
 	},
 	"ChainlinkWrapper": {
-		"address": "0x0dCeB22e6A84556eE98b4D18df1D52b4953bA17C",
+		"address": "0x246AcA90BC1f01F55dcE53F24B7E911Dff9D5A75",
 		"proxyAdmin": "0x173674c6d9630b7c3949e4988d9E079a0bE7cF81"
+	},
+	"TwapOracleWrapper": {
+		"address": "0xBB392D20091b682A6b00FbaFf9c182FceDEfc66c"
 	}
 }
