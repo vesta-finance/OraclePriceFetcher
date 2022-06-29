@@ -1,46 +1,13 @@
+import { SupportedChain } from "./NetworkConfig"
+import { FirstDeployment } from "./contractConfigs/FirstDeploymentConfig"
+import { VstOracleConfig } from "./contractConfigs/VstOracleConfig"
+
 export interface IDeployConfig {
-	isTestnet: boolean
-	outputFile: string
 	TX_CONFIRMATIONS: number
-	chainlinkSEQFlag: string
-	chainlinkFlagsContract: string
-	adminAddress: string
-
-	rentBTC: string
-	gohm: string
-	ethChainlink: IChainlinkOracle
-	btcChainlink: IChainlinkOracle
-	gohmChainlink: IChainlinkOracle
-
-	dopex?: string
-	dopexOracle?: ICustomOracle
-
-	twap?: ITwapConfigConstructor
-	gmx?: ITwapOracle
+	FirstDeployment?: CrossChainFirstDeployment
+	VstDeployment?: VstOracleConfig
 }
 
-export interface IChainlinkOracle {
-	priceOracle: string
-	indexOracle: string
-}
-
-export interface ICustomOracle {
-	contract: string
-	decimals: number
-	currentPriceHex: string
-	lastPriceHex: string
-	lastUpdateHex: string
-	decimalsHex: string
-}
-
-export interface ITwapConfigConstructor {
-	weth: string
-	chainlinkEth: string
-	chainlingFlagSEQ: string
-	chainlinkFlagsContract: string
-}
-
-export interface ITwapOracle {
-	token: string
-	pool: string
+export type CrossChainFirstDeployment = {
+	[key in SupportedChain | string]?: FirstDeployment
 }

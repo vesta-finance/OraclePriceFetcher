@@ -1,29 +1,42 @@
-import * as dotenv from "dotenv"
+import fs from "fs"
+import { secrets } from "./.secrets"
 
-import { HardhatUserConfig, task, subtask } from "hardhat/config"
+import { HardhatUserConfig, subtask, task } from "hardhat/config"
 import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from "hardhat/builtin-tasks/task-names"
+import "hardhat-preprocessor"
+import "@typechain/hardhat"
 
 import "@nomiclabs/hardhat-etherscan"
 import "@nomiclabs/hardhat-waffle"
-import "@typechain/hardhat"
 import "@openzeppelin/hardhat-upgrades"
 
-dotenv.config()
+import deploy from "./scripts/tasks/DeployTask"
+import deployVST from "./scripts/tasks/DeployVSTOracleTask"
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-	const accounts = await hre.ethers.getSigners()
+task("deploy", "Deploy task")
+	.addParam("env", "localhost | testnet | mainnet", "testnet")
+	.setAction(deploy)
 
-	for (const account of accounts) {
-		console.log(account.address)
+task("vstOracle", "Deploy VST Oracle task")
+	.addParam("env", "localhost | testnet | mainnet", "testnet")
+	.setAction(deployVST)
+
+subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(
+	async (_, __, runSuper) => {
+		const paths = await runSuper()
+		return paths.filter(
+			(p: string) => !p.endsWith(".t.sol") || p.includes("/mock/")
+		)
 	}
-})
+)
 
-subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(async (_, __, runSuper) => {
-	const paths = await runSuper()
-	return paths.filter((p: string) => !p.endsWith(".t.sol") || p.includes("/mock/"))
-})
+function getRemappings() {
+	return fs
+		.readFileSync("remappings.txt", "utf8")
+		.split("\n")
+		.filter(Boolean)
+		.map(line => line.trim().split("="))
+}
 
 const config: HardhatUserConfig = {
 	defaultNetwork: "localhost",
@@ -31,23 +44,21 @@ const config: HardhatUserConfig = {
 		localhost: {
 			url: "http://localhost:8545",
 		},
-		rinkeby: {
-			url: process.env.RINKEBY_URL || "",
-			accounts:
-				process.env.PRIVATE_KEY_TEST !== undefined
-					? [process.env.PRIVATE_KEY_TEST]
-					: ["0x60ddfe7f579ab6867cbe7a2dc03853dc141d7a4ab6dbefc0dae2d2b1bd4e487f"],
+		arbitrumOne: {
+			url: secrets.networks.arbitrumOne!.RPC_URL || "",
+			accounts: [secrets.networks.arbitrumOne!.PRIVATE_KEY],
 		},
-		mainnet: {
-			url: process.env.MAINNET_URL || "",
-			accounts:
-				process.env.PRIVATE_KEY !== undefined
-					? [process.env.PRIVATE_KEY]
-					: ["0x60ddfe7f579ab6867cbe7a2dc03853dc141d7a4ab6dbefc0dae2d2b1bd4e487f"],
+		arbitrumTestnet: {
+			url: secrets.networks.arbitrumTestnet!.RPC_URL,
+			accounts: [secrets.networks.arbitrumTestnet!.PRIVATE_KEY],
 		},
 	},
 	etherscan: {
-		apiKey: process.env.ETHERSCAN_API_KEY,
+		apiKey: {
+			arbitrumOne: secrets.networks.arbitrumOne?.ETHERSCAN_API_KEY!,
+			arbitrumTestnet:
+				secrets.networks.arbitrumTestnet?.ETHERSCAN_API_KEY!,
+		},
 	},
 	solidity: {
 		compilers: [
@@ -65,9 +76,22 @@ const config: HardhatUserConfig = {
 	},
 	paths: {
 		sources: "./src",
-		tests: "./test",
 		cache: "./hardhat/cache",
 		artifacts: "./hardhat/artifacts",
+	},
+	preprocess: {
+		eachLine: hre => ({
+			transform: (line: string) => {
+				if (line.match(/^\s*import /i)) {
+					getRemappings().forEach(([find, replace]) => {
+						if (line.match(find)) {
+							line = line.replace(find, replace)
+						}
+					})
+				}
+				return line
+			},
+		}),
 	},
 }
 
