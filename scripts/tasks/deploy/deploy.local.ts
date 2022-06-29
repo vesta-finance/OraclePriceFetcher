@@ -3,7 +3,6 @@ import { Deployer } from "./Deployer"
 import { HardhatRuntimeEnvironment } from "hardhat/types/runtime"
 
 const config: IDeployConfig = {
-	outputFile: "local_deployments.json",
 	TX_CONFIRMATIONS: 1,
 }
 

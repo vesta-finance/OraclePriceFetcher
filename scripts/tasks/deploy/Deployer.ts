@@ -2,8 +2,7 @@ import { IDeployConfig } from "../../config/DeployConfig"
 import { DeploymentHelper } from "../../utils/DeploymentHelper"
 import { HardhatRuntimeEnvironment } from "hardhat/types/runtime"
 import { HardhatEthersHelpers } from "@nomiclabs/hardhat-ethers/types"
-import { Contract, Signer } from "ethers"
-import { ZERO_ADDRESS } from "../../Deployer"
+import { constants, Contract, Signer } from "ethers"
 import { FirstDeployment } from "../../config/contractConfigs/FirstDeploymentConfig"
 
 export class Deployer {
@@ -32,7 +31,7 @@ export class Deployer {
 		this.deployer = (await this.ethers.getSigners())[0]
 		this.chainConfig = this.config.FirstDeployment![this.hre.network.name]
 
-		if (this.chainConfig !== undefined) {
+		if (this.chainConfig === undefined) {
 			throw `ChainConfig isn't configured for ${this.hre.network.name}`
 		}
 
@@ -106,9 +105,9 @@ export class Deployer {
 
 		await this.helper.sendAndWaitForTransaction(
 			this.chainlinkOracle?.addOracle(
-				ZERO_ADDRESS,
+				constants.AddressZero,
 				this.chainConfig!.ethChainlink.priceOracle,
-				ZERO_ADDRESS
+				constants.AddressZero
 			)
 		)
 
@@ -116,7 +115,7 @@ export class Deployer {
 			this.chainlinkOracle?.addOracle(
 				this.chainConfig!.rentBTC,
 				this.chainConfig!.btcChainlink.priceOracle,
-				ZERO_ADDRESS
+				constants.AddressZero
 			)
 		)
 
@@ -150,23 +149,26 @@ export class Deployer {
 
 		await this.helper.sendAndWaitForTransaction(
 			this.priceFeedV2?.addOracle(
-				ZERO_ADDRESS,
+				constants.AddressZero,
 				this.chainlinkOracle?.address,
-				ZERO_ADDRESS
+				constants.AddressZero
 			)
 		)
+
 		await this.helper.sendAndWaitForTransaction(
 			this.priceFeedV2?.addOracle(
 				this.chainConfig!.gohm,
-				this.chainlinkOracle?.address,
-				ZERO_ADDRESS
+				this.chainConfig!.isTestnet
+					? this.customOracle?.address
+					: this.chainlinkOracle?.address,
+				constants.AddressZero
 			)
 		)
 		await this.helper.sendAndWaitForTransaction(
 			this.priceFeedV2?.addOracle(
 				this.chainConfig!.rentBTC,
 				this.chainlinkOracle?.address,
-				ZERO_ADDRESS
+				constants.AddressZero
 			)
 		)
 	}

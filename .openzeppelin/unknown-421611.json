@@ -54,6 +54,26 @@
       "address": "0x42B781c955C63F60f1216D6A6Fee6046f7096E8B",
       "txHash": "0xe5b5ee1ec5502ea063bc71d90958f9047c9bf49a03be1cd6a7be2fc468dddb81",
       "kind": "transparent"
+    },
+    {
+      "address": "0x23210063d06acE58D32b61E0881c04FFd7f6244A",
+      "txHash": "0x19f1e0e7306e1f13637c2ea320e5f7799feca6d237ae5ea187b2a13fd385cc14",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x6739A4F471c630f39cbB55A1d470D414b99074cD",
+      "txHash": "0x3dbc8e258d172a536dc5e1f1f95521437993aa752731dbde9caea45c2e56e54e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x61995C2ff2949E79405d2398b70152A7655240A2",
+      "txHash": "0xca50674cd56387049482dda756e4b86ac0f88f45de061e0cedbed01de98a4191",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x246AcA90BC1f01F55dcE53F24B7E911Dff9D5A75",
+      "txHash": "0xdc9213d183f2c6d60e3b10a6ccda97ed3dc9df7d914eba4a6213f823af3bfaa6",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -791,6 +811,478 @@
               }
             ],
             "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "a9e762256d468c8a8fe59318a9172211ef07558a5d75ef31390d2a00099a0ddd": {
+      "address": "0xA7e04e7A98223Ac46d162D6467FA64A29c81cD4d",
+      "txHash": "0x8b5020e0aa7b4564da53e50ac5b269bf9de67d5c6e3029d1b3736a190295e9c7",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "verificator",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_contract(IOracleVerificationV1)2244",
+            "contract": "PriceFeedV2",
+            "src": "src\\main\\PriceFeedV2.sol:11"
+          },
+          {
+            "label": "accesses",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "PriceFeedV2",
+            "src": "src\\main\\PriceFeedV2.sol:13"
+          },
+          {
+            "label": "lastGoodPrice",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "PriceFeedV2",
+            "src": "src\\main\\PriceFeedV2.sol:14"
+          },
+          {
+            "label": "oracles",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_struct(Oracle)2338_storage)",
+            "contract": "PriceFeedV2",
+            "src": "src\\main\\PriceFeedV2.sol:15"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IOracleVerificationV1)2244": {
+            "label": "contract IOracleVerificationV1",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(Oracle)2338_storage)": {
+            "label": "mapping(address => struct IPriceFeedV2.Oracle)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Oracle)2338_storage": {
+            "label": "struct IPriceFeedV2.Oracle",
+            "members": [
+              {
+                "label": "primaryWrapper",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "secondaryWrapper",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "17d16a8e15176e54384f9ab8a47b30489d8d6afb2695ccfb5f5c6ceb765a756b": {
+      "address": "0x12CcAC4E7E12A375259921Ed1071DFF2db6D7151",
+      "txHash": "0x17ebcddc2ad4d7bb5dae2ea1ed9b4845705abb36851a3108453203ef4ebc0dee",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "oracles",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_address,t_struct(CustomOracle)3811_storage)",
+            "contract": "CustomOracleWrapper",
+            "src": "src\\main\\wrapped\\CustomOracleWrapper.sol:36"
+          },
+          {
+            "label": "savedResponses",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_struct(SavedResponse)2253_storage)",
+            "contract": "CustomOracleWrapper",
+            "src": "src\\main\\wrapped\\CustomOracleWrapper.sol:37"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(CustomOracle)3811_storage)": {
+            "label": "mapping(address => struct CustomOracleWrapper.CustomOracle)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(SavedResponse)2253_storage)": {
+            "label": "mapping(address => struct IOracleWrapper.SavedResponse)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(CustomOracle)3811_storage": {
+            "label": "struct CustomOracleWrapper.CustomOracle",
+            "members": [
+              {
+                "label": "contractAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "decimals",
+                "type": "t_uint8",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "callCurrentPrice",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "callLastPrice",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "callLastUpdate",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "callDecimals",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_struct(SavedResponse)2253_storage": {
+            "label": "struct IOracleWrapper.SavedResponse",
+            "members": [
+              {
+                "label": "currentPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lastPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastUpdate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "99dee2a35487d30fa2e0fd187ab0145396d32caa4a436f787cdae4a0d2d78b14": {
+      "address": "0xA12112DF4d890FA2395F7Ef4CbacF0926df7B8c6",
+      "txHash": "0x4de15e94559b89107115e49c1acd48240c794cc65119602873578edac144e521",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\proxy\\utils\\Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\proxy\\utils\\Initializable.sol:44"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "lib\\openzeppelin-contracts-upgradeable\\contracts\\access\\OwnableUpgradeable.sol:87"
+          },
+          {
+            "label": "flagSEQOffline",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "ChainlinkWrapper",
+            "src": "src\\main\\wrapped\\ChainlinkWrapper.sol:38"
+          },
+          {
+            "label": "flagsContract",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_contract(FlagsInterface)86",
+            "contract": "ChainlinkWrapper",
+            "src": "src\\main\\wrapped\\ChainlinkWrapper.sol:39"
+          },
+          {
+            "label": "aggregators",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_address,t_struct(Aggregators)2955_storage)",
+            "contract": "ChainlinkWrapper",
+            "src": "src\\main\\wrapped\\ChainlinkWrapper.sol:41"
+          },
+          {
+            "label": "savedResponses",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_struct(SavedChainlinkResponse)2937_storage)",
+            "contract": "ChainlinkWrapper",
+            "src": "src\\main\\wrapped\\ChainlinkWrapper.sol:42"
+          },
+          {
+            "label": "lastSavedResponses",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_address,t_struct(SavedChainlinkResponse)2937_storage)",
+            "contract": "ChainlinkWrapper",
+            "src": "src\\main\\wrapped\\ChainlinkWrapper.sol:43"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(AggregatorV3Interface)45": {
+            "label": "contract AggregatorV3Interface",
+            "numberOfBytes": "20"
+          },
+          "t_contract(FlagsInterface)86": {
+            "label": "contract FlagsInterface",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(Aggregators)2955_storage)": {
+            "label": "mapping(address => struct ChainlinkWrapper.Aggregators)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(SavedChainlinkResponse)2937_storage)": {
+            "label": "mapping(address => struct ChainlinkWrapper.SavedChainlinkResponse)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Aggregators)2955_storage": {
+            "label": "struct ChainlinkWrapper.Aggregators",
+            "members": [
+              {
+                "label": "price",
+                "type": "t_contract(AggregatorV3Interface)45",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "index",
+                "type": "t_contract(AggregatorV3Interface)45",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(SavedChainlinkResponse)2937_storage": {
+            "label": "struct ChainlinkWrapper.SavedChainlinkResponse",
+            "members": [
+              {
+                "label": "price",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "index",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "lastUpdate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
           },
           "t_uint256": {
             "label": "uint256",

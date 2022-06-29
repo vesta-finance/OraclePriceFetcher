@@ -17,5 +17,5 @@ snapshot :; forge clean && forge snapshot --optimize --optimizer-runs 1000000
 
 # Hardhat
 deploy-local :; npx hardhat compile && npx hardhat deploy --network localhost --env localhost
-deploy-testnet :; npx hardhat compile && npx hardhat deploy --network rinkeby --env testnet
-deploy-mainnet :; npx hardhat compile && npx hardhat deploy --network mainnet --env mainnet
+deploy-arbitrumTestnet :; npx hardhat compile && npx hardhat deploy --network arbitrumTestnet --env testnet
+deploy-arbitrum :; npx hardhat compile && npx hardhat deploy --network arbitrumOne --env mainnet

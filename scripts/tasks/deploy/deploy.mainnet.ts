@@ -3,7 +3,7 @@ import { Deployer } from "./Deployer"
 import { colorLog, Colors, addColor } from "../../utils/ColorConsole"
 import { HardhatRuntimeEnvironment } from "hardhat/types/runtime"
 import readline from "readline-sync"
-import { ZERO_ADDRESS } from "../../Deployer"
+import { constants } from "ethers"
 
 const config: IDeployConfig = {
 	TX_CONFIRMATIONS: 3,
@@ -17,11 +17,11 @@ const config: IDeployConfig = {
 			gohm: "0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1",
 			ethChainlink: {
 				priceOracle: "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612",
-				indexOracle: ZERO_ADDRESS,
+				indexOracle: constants.AddressZero,
 			},
 			btcChainlink: {
 				priceOracle: "0x6ce185860a4963106506C203335A2910413708e9",
-				indexOracle: ZERO_ADDRESS,
+				indexOracle: constants.AddressZero,
 			},
 			gohmChainlink: {
 				priceOracle: "0x761aaeBf021F19F198D325D7979965D0c7C9e53b",
