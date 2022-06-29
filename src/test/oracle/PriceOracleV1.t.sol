@@ -25,7 +25,7 @@ contract PriceOracleV1Test is BaseTest {
 
 		vm.startPrank(owner);
 		{
-			underTest.setUp(10, 11, 1);
+			underTest.setUp("TEST-ORACLE", 18);
 			underTest.registerTrustedNode(trustedNode);
 		}
 		vm.stopPrank();
@@ -34,8 +34,16 @@ contract PriceOracleV1Test is BaseTest {
 	function test_setUp_CallerIsOwner() public prankAs(user) {
 		underTest = new PriceOracleV1();
 
-		underTest.setUp(10, 11, 1);
+		underTest.setUp("TEST-ORACLE", 18);
 		assertEq(underTest.owner(), user);
+	}
+
+	function test_setUp_ConfigureDecimalsAndName() public prankAs(user) {
+		underTest = new PriceOracleV1();
+
+		underTest.setUp("TEST-ORACLE", 18);
+		assertEq(underTest.ORACLE_NAME(), "TEST-ORACLE");
+		assertEq(underTest.decimals(), 18);
 	}
 
 	function test_registerTrustedNode_asUser_thenReverts() public prankAs(user) {
@@ -48,7 +56,7 @@ contract PriceOracleV1Test is BaseTest {
 		underTest.registerTrustedNode(address(0));
 	}
 
-	function test_update_givenNotTrustedNode_thenReverts() public {
+	function test_update_asNotTrustedNode_thenReverts() public {
 		vm.prank(owner);
 		underTest.unregisterTrustedNode(trustedNode);
 
@@ -64,15 +72,15 @@ contract PriceOracleV1Test is BaseTest {
 		vm.prank(owner);
 		underTest.registerTrustedNode(trustedNode);
 
-		(uint256 _currentPrice, , uint256 _lastUpdate) = underTest.getPriceData();
+		(uint256 beforePrice, , uint256 beforeLastUpdate) = underTest.getPriceData();
 
 		vm.prank(trustedNode);
 		underTest.update(12);
 
-		(uint256 currentPrice, uint256 lastPrice, uint256 lastUpdate) = underTest.getPriceData();
+		(uint256 afterPrice, uint256 afterLastPrice, uint256 afterLastUpdate) = underTest.getPriceData();
 
-		assertEq(currentPrice, 12);
-		assertEq(_currentPrice, lastPrice);
-		assertTrue(_lastUpdate <= lastUpdate);
+		assertEq(afterPrice, 12);
+		assertEq(beforePrice, afterLastPrice);
+		assertTrue(beforeLastUpdate <= afterLastUpdate);
 	}
 }
