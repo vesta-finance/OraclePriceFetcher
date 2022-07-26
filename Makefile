@@ -2,20 +2,34 @@
 # (-include to ignore error if it does not exist)
 -include .env
 
+FORK_MAINNET_RPC =  --fork-url ${ARBITRUM_RPC}
+HARDHAT_COMPILE = npx hardhat compile
+FORGE_CLEAN = forge clean
+E2E_ONLY = --match-path src/test/e2e/*
+UNIT_ONLY = --no-match-path src/test/e2e/*
+
+# How to use $(EXTRA) or $(NETWORK)
+# define it with your command. 
+# e.g: make test EXTRA='-vvv --match-contract MyContractTest'
+# e.g: make deploy-testnet NETWORK='arbitrumTestnet'
+
 # deps
 update:; forge update
 remappings:; forge remappings > remappings.txt
 
-# Build & test
-build  :; forge clean && forge build --optimize --optimizer-runs 1000000
-test   :; forge clean && forge test --optimize --optimizer-runs 1000000 -v
-test-debug   :; forge clean && forge test --optimize --optimizer-runs 1000000 -vv
-test-trace   :; forge clean && forge test --optimize --optimizer-runs 1000000 -vvv
-gas-report :; forge clean && forge test --optimize --optimizer-runs 1000000 --gas-report
-clean  :; forge clean
-snapshot :; forge clean && forge snapshot --optimize --optimizer-runs 1000000
+# commands
+build  :; $(FORGE_CLEAN) && forge build 
+clean  :; $(FORGE_CLEAN)
 
-# Hardhat
-deploy-local :; npx hardhat compile && npx hardhat deploy --network localhost --env localhost
-deploy-arbitrumTestnet :; npx hardhat compile && npx hardhat deploy --network arbitrumTestnet --env testnet
-deploy-arbitrum :; npx hardhat compile && npx hardhat deploy --network arbitrumOne --env mainnet
+# test
+test   :; $(FORGE_CLEAN) && forge test $(UNIT_ONLY) $(EXTRA)
+test-e2e   :; $(FORGE_CLEAN) && forge test $(FORK_MAINNET_RPC) $(E2E_ONLY) $(EXTRA)
+
+# Gas Snapshots
+snapshot :; $(FORGE_CLEAN) && forge snapshot $(EXTRA)
+snapshot-fork :; $(FORGE_CLEAN) && forge snapshot --snap .gas-snapshot-fork $(FORK_MAINNET_RPC) $(EXTRA)
+
+# Hardhat Deployments
+deploy-local :; $(HARDHAT_COMPILE) && npx hardhat deploy --network local --env localhost
+deploy-testnet :; $(HARDHAT_COMPILE) && npx hardhat deploy --network $(NETWORK) --env testnet
+deploy-mainnet :; $(HARDHAT_COMPILE) && npx hardhat deploy --network $(NETWORK) --env mainnet
