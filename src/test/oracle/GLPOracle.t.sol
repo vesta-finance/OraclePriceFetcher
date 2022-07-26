@@ -29,7 +29,6 @@ contract GLPOracleTest is BaseTest {
 
 	function test_getPrice_thenReturnsInUSD() public {
 		uint256 mockMinimum = 15_000 ether;
-		uint256 mockMaximum = 45_000 ether;
 		uint256 mockSupply = 100_500 ether;
 
 		vm.mockCall(
@@ -37,20 +36,13 @@ contract GLPOracleTest is BaseTest {
 			abi.encodeWithSignature("getAumInUsdg(bool)", false),
 			abi.encode(mockMinimum)
 		);
-		vm.mockCall(
-			address(0x2),
-			abi.encodeWithSignature("getAumInUsdg(bool)", true),
-			abi.encode(mockMaximum)
-		);
+
 		vm.mockCall(
 			address(0x1),
 			abi.encodeWithSignature("totalSupply()"),
 			abi.encode(mockSupply)
 		);
 
-		assertEq(
-			underTest.getPrice(),
-			(((mockMinimum + mockMaximum) / 2) * 1e18) / mockSupply
-		);
+		assertEq(underTest.getPrice(), (mockMinimum * 1e18) / mockSupply);
 	}
 }

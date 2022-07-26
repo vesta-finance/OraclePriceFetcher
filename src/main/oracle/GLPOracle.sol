@@ -16,10 +16,6 @@ contract GLPOracle is Initializable {
 	}
 
 	function getPrice() external view returns (uint256) {
-		uint256 minimum = glpManager.getAumInUsdg(false);
-		uint256 maximum = glpManager.getAumInUsdg(true);
-		uint256 average = (maximum + minimum) / 2;
-
-		return (average * 1e18) / glp.totalSupply();
+		return (glpManager.getAumInUsdg(false) * 1e18) / glp.totalSupply();
 	}
 }

@@ -19,10 +19,8 @@ contract GLPOracleE2ETest is BaseTest {
 	}
 
 	function test_getPrice_thenReturnsInUSD() public {
-		uint256 averagePrice = (glpManager.getAumInUsdg(false) +
-			glpManager.getAumInUsdg(true)) / 2;
-
-		uint256 expectedPrice = (averagePrice * 1e18) / glp.totalSupply();
+		uint256 expectedPrice = (glpManager.getAumInUsdg(false) * 1e18) /
+			glp.totalSupply();
 
 		assertEq(underTest.getPrice(), expectedPrice);
 	}
