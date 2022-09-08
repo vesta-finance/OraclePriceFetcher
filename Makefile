@@ -5,8 +5,9 @@
 FORK_MAINNET_RPC =  --fork-url ${ARBITRUM_RPC}
 HARDHAT_COMPILE = npx hardhat compile
 FORGE_CLEAN = forge clean
-E2E_ONLY = --match-path src/test/e2e/*
-UNIT_ONLY = --no-match-path src/test/e2e/*
+E2E_ONLY = --match-path "src/test/e2e/*"
+UNIT_ONLY = --no-match-path "src/test/e2e/*"
+SCRIPT = deploy;
 
 # How to use $(EXTRA) or $(NETWORK)
 # define it with your command. 
@@ -30,6 +31,6 @@ snapshot :; $(FORGE_CLEAN) && forge snapshot $(EXTRA)
 snapshot-fork :; $(FORGE_CLEAN) && forge snapshot --snap .gas-snapshot-fork $(FORK_MAINNET_RPC) $(EXTRA)
 
 # Hardhat Deployments
-deploy-local :; $(HARDHAT_COMPILE) && npx hardhat deploy --network local --env localhost
-deploy-testnet :; $(HARDHAT_COMPILE) && npx hardhat deploy --network $(NETWORK) --env testnet
-deploy-mainnet :; $(HARDHAT_COMPILE) && npx hardhat deploy --network $(NETWORK) --env mainnet
+deploy-local :; $(HARDHAT_COMPILE) && npx hardhat $(SCRIPT) --network local --env localhost
+deploy-testnet :; $(HARDHAT_COMPILE) && npx hardhat $(SCRIPT) --network $(NETWORK) --env testnet
+deploy-mainnet :; $(HARDHAT_COMPILE) && npx hardhat $(SCRIPT) --network $(NETWORK) --env mainnet

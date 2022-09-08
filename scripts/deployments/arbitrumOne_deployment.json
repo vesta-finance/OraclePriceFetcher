@@ -21,5 +21,9 @@
   "VSTOracle": {
     "address": "0x46bAc6210DcB43b4269ffe766f31B36267C41EdE",
     "proxyAdmin": "0x52d0712969FDB63EacBC6B629654CC31bbB709C9"
+  },
+  "GLPOracle": {
+    "address": "0x1f281C6743d8827cDf1115F2D165779d7CCf4D90",
+    "proxyAdmin": "0x52d0712969FDB63EacBC6B629654CC31bbB709C9"
   }
 }

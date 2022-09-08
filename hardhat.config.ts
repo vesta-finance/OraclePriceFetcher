@@ -12,6 +12,7 @@ import "@openzeppelin/hardhat-upgrades"
 
 import deploy from "./scripts/tasks/DeployTask"
 import deployVST from "./scripts/tasks/DeployVSTOracleTask"
+import deployGLP from "./scripts/tasks/DeployGLPOracleTask"
 
 task("deploy", "Deploy task")
 	.addParam("env", "localhost | testnet | mainnet", "testnet")
@@ -20,6 +21,11 @@ task("deploy", "Deploy task")
 task("vstOracle", "Deploy VST Oracle task")
 	.addParam("env", "localhost | testnet | mainnet", "testnet")
 	.setAction(deployVST)
+
+
+task("deployGLP", "Deploy GLP Oracle task")
+	.addParam("env", "localhost | testnet | mainnet", "testnet")
+	.setAction(deployGLP)
 
 subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(
 	async (_, __, runSuper) => {

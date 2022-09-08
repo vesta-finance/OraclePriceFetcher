@@ -29,6 +29,11 @@
       "address": "0x46bAc6210DcB43b4269ffe766f31B36267C41EdE",
       "txHash": "0x544f2e34e3bb268051f752e4e790c17ec7a83478f1fe1b74545a7e9842f41412",
       "kind": "transparent"
+    },
+    {
+      "address": "0x1f281C6743d8827cDf1115F2D165779d7CCf4D90",
+      "txHash": "0x91bb61b9aaec14ec7cf316cae3e2a5e1537f2a46569eb0890a40df279fbe5fb9",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -638,6 +643,72 @@
           "t_uint8": {
             "label": "uint8",
             "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "4b7a58cf699b13f015ce8ef1c6effe161b99056690af4111e371d3d5d9616598": {
+      "address": "0x372FfB4c80E0afFD21025934B8aB9B6AF15B2778",
+      "txHash": "0x9ead6dc21ba5211e7b231adb3a074eea443af5f024835a32d665c74932d39728",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "label": "glpManager",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_contract(IGLPManager)2229",
+            "contract": "GLPOracle",
+            "src": "src/main/oracle/GLPOracle.sol:11"
+          },
+          {
+            "label": "gmxVault",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_contract(IGMXVault)2242",
+            "contract": "GLPOracle",
+            "src": "src/main/oracle/GLPOracle.sol:12"
+          },
+          {
+            "label": "glp",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_contract(IERC20Upgradeable)973",
+            "contract": "GLPOracle",
+            "src": "src/main/oracle/GLPOracle.sol:13"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20Upgradeable)973": {
+            "label": "contract IERC20Upgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IGLPManager)2229": {
+            "label": "contract IGLPManager",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IGMXVault)2242": {
+            "label": "contract IGMXVault",
+            "numberOfBytes": "20"
           }
         }
       }
