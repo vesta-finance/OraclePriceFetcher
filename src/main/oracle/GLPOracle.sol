@@ -11,6 +11,12 @@ contract GLPOracle is Initializable {
 	IGLPManager public glpManager;
 	IGMXVault public gmxVault;
 	IERC20 public glp;
+	address public owner;
+
+	modifier onlyOwner() {
+		require(owner == msg.sender, "Owner only");
+		_;
+	}
 
 	function setUp(
 		address _glp,
@@ -31,4 +37,14 @@ contract GLPOracle is Initializable {
 
 		return rawPrice - ((rawPrice * fee) / 10_000);
 	}
+
+	function setGLPManager(address _glpManager) external onlyOwner {
+		glpManager = IGLPManager(_glpManager);
+	}
+
+	function initOwnership(address _of) external {
+		require(owner == address(0), "Already has an owner");
+		owner = _of;
+	}
 }
+

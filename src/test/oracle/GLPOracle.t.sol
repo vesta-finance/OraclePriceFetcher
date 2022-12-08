@@ -11,10 +11,12 @@ contract GLPOracleTest is BaseTest {
 	address private glp = address(0x1);
 	address private glpManager = address(0x2);
 	address private vault = address(0x3);
+	address private owner = address(0x4);
 
 	function setUp() public {
 		underTest = new GLPOracle();
 		underTest.setUp(glp, glpManager, vault);
+		underTest.initOwnership(owner);
 	}
 
 	function test_setUp_thenStorageValueAreCorrect() external {
@@ -30,6 +32,39 @@ contract GLPOracleTest is BaseTest {
 	function test_setUp_calledTwice_thenReverts() external {
 		vm.expectRevert(REVERT_ALREADY_INITIALIZED);
 		underTest.setUp(address(0), address(0), address(0));
+	}
+
+	function test_initOwnership_whenOwnerIsNotSet_thenAddressIsOwner()
+		external
+	{
+		underTest = new GLPOracle();
+		underTest.setUp(glp, glpManager, vault);
+
+		underTest.initOwnership(owner);
+		assertEq(underTest.owner(), owner);
+	}
+
+	function test_initOwnership_whenAlreadyInited_thenReverts() external {
+		underTest = new GLPOracle();
+		underTest.setUp(glp, glpManager, vault);
+
+		underTest.initOwnership(owner);
+
+		vm.expectRevert("Already has an owner");
+		underTest.initOwnership(owner);
+	}
+
+	function test_setGLPManager_asUser_thenReverts() external {
+		vm.expectRevert("Owner only");
+		underTest.setGLPManager(address(0x5));
+	}
+
+	function test_setGLPManager_asOwner_thenUpdatesGLPManager()
+		external
+		prankAs(owner)
+	{
+		underTest.setGLPManager(address(0x51));
+		assertEq(address(underTest.glpManager()), address(0x51));
 	}
 
 	function test_getPrice_thenReturnsInUSD() public {
@@ -66,3 +101,4 @@ contract GLPOracleTest is BaseTest {
 		assertEq(underTest.getPrice(), mockMinimum);
 	}
 }
+

@@ -8,7 +8,7 @@ import "../base/BaseTest.t.sol";
 
 contract GLPOracleE2ETest is BaseTest {
 	IGLPManager private constant glpManager =
-		IGLPManager(0x321F653eED006AD1C29D174e17d96351BDe22649);
+		IGLPManager(0x3963FfC9dff443c2A94f21b129D429891E32ec18);
 	MockERC20 private constant glp =
 		MockERC20(0x4277f8F2c384827B5273592FF7CeBd9f2C1ac258);
 	IGMXVault private constant vault =
@@ -30,3 +30,4 @@ contract GLPOracleE2ETest is BaseTest {
 		assertEq(underTest.getPrice(), expectedPrice);
 	}
 }
+
