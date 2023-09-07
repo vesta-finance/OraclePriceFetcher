@@ -25,5 +25,12 @@
   "GLPOracle": {
     "address": "0x1f281C6743d8827cDf1115F2D165779d7CCf4D90",
     "proxyAdmin": "0x52d0712969FDB63EacBC6B629654CC31bbB709C9"
+  },
+  "RedstoneWrapper": {
+    "address": "0x09E54b1baD677900Aa7d18e5ce65CB1Ba9d2f666",
+    "proxyAdmin": "0x52d0712969FDB63EacBC6B629654CC31bbB709C9"
+  },
+  "PriceOracleV1_SunsetTemplate": {
+    "address": "0xA71B190D6b36Cb1eA5F04DdC05124a845F7b6dBc"
   }
 }
