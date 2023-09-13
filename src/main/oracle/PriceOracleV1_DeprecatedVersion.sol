@@ -2,6 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "../interfaces/IPriceOracleV1.sol";
+import "../interfaces/IOracleWrapper.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
@@ -53,7 +54,21 @@ contract PriceOracleV1 is IPriceOracleV1, OwnableUpgradeable {
         lastUpdate = block.timestamp;
     }
 
+    //Sunsetting Vesta VST oracle, migrating to Redstone
     function getPriceData() external view returns (uint256 _currentPrice, uint256 _lastPrice, uint256 _lastUpdate) {
-        return (currentPrice, lastPrice, lastUpdate);
+        _currentPrice = IOracleWrapper(0x09E54b1baD677900Aa7d18e5ce65CB1Ba9d2f666).getExternalPrice(
+            0x64343594Ab9b56e99087BfA6F2335Db24c2d1F17
+        );
+
+        //scaling down answer to contract's decimals value.
+        _currentPrice = scalePriceByDigits(_currentPrice, 18);
+
+        return (_currentPrice, _currentPrice, block.timestamp);
+    }
+
+    function scalePriceByDigits(uint256 _price, uint256 _answerDigits) internal view returns (uint256) {
+        return _answerDigits < decimals
+            ? _price * (10 ** (decimals - _answerDigits))
+            : _price / (10 ** (_answerDigits - decimals));
     }
 }
